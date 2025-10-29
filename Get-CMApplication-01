@@ -1,0 +1,9 @@
+#List Application info: Display Name, Deployment Type Name and Content IDs (the last one in Hex format as in client log files)
+
+Get-CMApplication | ForEach-Object {
+$app = $_
+$app | Get-CMDeploymentType | Select-Object `
+  @{Name="ApplicationName";Expression={$app.LocalizedDisplayName}},
+  @{Name="DeploymentTypeName";Expression={$_.LocalizedDisplayName}},
+  @{Name="HexID";Expression={$_.CI_UniqueID}}
+}
